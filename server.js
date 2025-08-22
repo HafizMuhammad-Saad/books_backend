@@ -37,11 +37,17 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // CORS configuration
-app.use(cors({
- origin: process.env.CLIENT_ORIGIN?.split(',') || '*',
-  credentials: true
-}));
-
+if (process.env.NODE_ENV === 'development') {
+  app.use(cors({
+    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    credentials: true
+  }));
+} else {
+  app.use(cors({
+    origin: process.env.CLIENT_ORIGIN?.split(','),
+    credentials: true
+  }));
+}
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
