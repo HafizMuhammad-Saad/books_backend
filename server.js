@@ -25,9 +25,7 @@ const PORT = process.env.PORT;
 connectDB();
 
 // Security middleware
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" }
-}));
+app.use(helmet());
 
 // Rate limiting
 const limiter = rateLimit({
@@ -37,17 +35,12 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // CORS configuration
-if (process.env.NODE_ENV === 'development') {
   app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'http://tecai.site:5000'],
     credentials: true
   }));
-} else {
-  app.use(cors({
-    origin: process.env.CLIENT_ORIGIN?.split(','),
-    credentials: true
-  }));
-}
+
+
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -111,9 +104,7 @@ app.use((error, req, res, next) => {
 // Start server
 app.listen(PORT, () => {
   
-  if (process.env.NODE_ENV === 'development') {
     console.log(`Server is running in development mode on http://localhost:${PORT}`);
-  }
 });
 
 export default app;
