@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -24,9 +23,6 @@ const PORT = process.env.PORT;
 // Connect to MongoDB
 connectDB();
 
-// Security middleware
-app.use(helmet());
-
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -36,7 +32,7 @@ app.use('/api/', limiter);
 
 // CORS configuration
   app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://buy-books.vercel.app'],
+    origin: ['http://localhost:5173', 'https://shop.tecai.site/', 'https://buy-books.vercel.app'],
     credentials: true
   }));
 
