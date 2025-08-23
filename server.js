@@ -13,6 +13,7 @@ import authRoutes from './routes/auth.js';
 
 // Load environment variables
 dotenv.config();
+const app = express();
 
 // CORS configuration
   app.use(cors({
@@ -23,7 +24,6 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
 const PORT = process.env.PORT;
 
 // Connect to MongoDB
@@ -65,13 +65,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 404 handler for API routes
-app.use('/api/*', (req, res) => {
-  res.status(404).json({ 
-    success: false,
-    message: 'API endpoint not found' 
-  });
-});
+
 
 // Global error handler
 app.use((error, req, res, next) => {
