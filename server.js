@@ -14,6 +14,12 @@ import authRoutes from './routes/auth.js';
 // Load environment variables
 dotenv.config();
 
+// CORS configuration
+  app.use(cors({
+    origin: ['http://localhost:5173', 'https://shop.tecai.site', 'https://buy-books.vercel.app'],
+    credentials: true
+  }));
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -30,11 +36,7 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
-// CORS configuration
-  app.use(cors({
-    origin: ['http://localhost:5173', 'https://shop.tecai.site/', 'https://buy-books.vercel.app'],
-    credentials: true
-  }));
+
 
 
 // Body parsing middleware
